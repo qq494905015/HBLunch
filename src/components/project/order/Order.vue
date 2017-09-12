@@ -5,13 +5,24 @@
 </template>
 
 <script>
-export default {
+  import api from '../../../api/';
+  export default {
   name: 'Order',
   data () {
     return {
       msg: '订单管理'
     }
-  }
+  },
+    created() {
+
+    },
+    mounted:function() {
+      api.getExcelTest();
+
+    },
+    methods:{
+
+    }
 }
 </script>
 
