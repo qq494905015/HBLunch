@@ -5,7 +5,6 @@
 </template>
 
 <script>
-  var xlsx  = require('node-xlsx');
   export default {
   name: 'hello',
   data () {

@@ -3,7 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+//引入vue 导入excel
+import vueXlsxTable from 'vue-xlsx-table'
+Vue.use(vueXlsxTable, {rABS: false})
+//
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

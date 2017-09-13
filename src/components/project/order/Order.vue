@@ -1,6 +1,7 @@
 <template>
-  <div >
-    订单管理
+  <div>
+    <h1>vue-xlsx-table</h1>
+    <vue-xlsx-table @on-select-file="handleSelectedFile"></vue-xlsx-table>
   </div>
 </template>
 
@@ -17,11 +18,13 @@
 
     },
     mounted:function() {
-      api.getExcelTest();
-
+//      api.getExcelTest();
+      api.getExcelTest2();
     },
-    methods:{
-
+    methods: {
+      handleSelectedFile (convertedData) {
+        console.log(convertedData)
+      }
     }
 }
 </script>
