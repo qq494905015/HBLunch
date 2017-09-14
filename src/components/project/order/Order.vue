@@ -18,8 +18,6 @@
 
     },
     mounted:function() {
-//      api.getExcelTest();
-      api.getExcelTest2();
     },
     methods: {
       handleSelectedFile (convertedData) {

@@ -6,6 +6,10 @@ import router from './router'
 //引入vue 导入excel
 import vueXlsxTable from 'vue-xlsx-table'
 Vue.use(vueXlsxTable, {rABS: false})
+//引入UI控件
+import Element from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+Vue.use(Element)
 //
 Vue.config.productionTip = false
 
