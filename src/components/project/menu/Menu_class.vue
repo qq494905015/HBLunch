@@ -9,58 +9,40 @@
       </el-submenu>
       <router-link :to="{path:'OrderManager'}"><el-menu-item index="order">订单管理</el-menu-item></router-link>
     </el-menu>
-    <el-table
-      :data="tableData"
-      border
-      style="width: 100%">
-      <el-table-column
-        prop="date"
-        label="日期"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        label="姓名"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="地址">
-      </el-table-column>
-    </el-table>
-    <div>
-      <table>
-        <tr>
-          <td></td>
-        </tr>
-      </table>
+
+    <div class="el-table el-table--fit el-table--striped el-table--enable-row-hover el-table--enable-row-transition" style="width: 100%;">
+      <div class="el-table__header-wrapper">
+        <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 100%;">
+          <thead>
+            <tr>
+              <th class="el-table_1_column_4 is-leaf">菜单名称</th>
+              <th class="el-table_1_column_5 is-leaf">描述</th>
+              <th class="el-table_1_column_6 is-leaf">图标</th>
+            </tr>
+          </thead>
+        </table>
+        <div class="el-table__body-wrapper">
+          <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 100%;">
+            <tr v-for="(data,index) in tableData" class="el-table__row el-table__row--striped">
+              <td class="el-table_1_column_4">{{data.name}}</td>
+              <td class="el-table_1_column_5">{{data.description}}</td>
+              <td class="el-table_1_column_6">{{data.iconURL}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
+  import data from './class.json'
   export default {
     name: 'menu_class',
     data() {
       return {
         activeIndex: 'menu_class',
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }]
-      };
+        tableData:data
+      }
     },
     methods: {
       //点击菜单触发事件
@@ -73,9 +55,10 @@
       },
     },
     created() {
-
     },
     mounted: function () {
+
+
     }
   }
 </script>
