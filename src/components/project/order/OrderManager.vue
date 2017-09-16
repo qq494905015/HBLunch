@@ -11,7 +11,7 @@
     </el-menu>
 
     <div>
-      <div class="el-table el-table--fit el-table--striped el-table--enable-row-hover el-table--enable-row-transition" :style="'width: '+orderTableWidth+'px;margin-left: 10%;padding: 14px;height:'+orderTableHeight+'px'" >
+      <div class="el-table el-table--fit el-table--striped el-table--enable-row-hover el-table--enable-row-transition" :style="'width: '+orderTableWidth+'px;margin-left: 10%;padding: 14px'" >
         <div class="el-table__header-wrapper">
           <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 100%;">
             <thead>
@@ -19,7 +19,6 @@
               <th class="el-table_1_column_4 is-leaf">订单号</th>
               <th class="el-table_1_column_5 is-leaf">日期</th>
               <th class="el-table_1_column_6 is-leaf">类型</th>
-              <th class="el-table_1_column_6 is-leaf">店名</th>
               <th class="el-table_1_column_6 is-leaf">点餐平台</th>
               <th class="el-table_1_column_6 is-leaf">电话</th>
               <th class="el-table_1_column_6 is-leaf">姓名</th>
@@ -31,31 +30,56 @@
           </table>
           <div class="el-table__body-wrapper">
             <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 100%;">
-              <tr v-for="(order_name,index) in order_name" class="el-table__row el-table__row--striped">
-                <td class="el-table_1_column_4">{{'VM000000'+(index+1)}}</td>
-                <td class="el-table_1_column_5">{{order_time[index]}}</td>
-                <td class="el-table_1_column_6">商圈合伙人</td>
-                <td class="el-table_1_column_6">白云区</td>
-                <td class="el-table_1_column_6">{{order_plation[index]}}</td>
-                <td class="el-table_1_column_6">{{order_phone[index]}}</td>
-                <td class="el-table_1_column_6">{{order_name}}</td>
-                <td class="el-table_1_column_6">
-                  <el-tooltip class="item" effect="dark" :content="order_address[index]" placement="top-start">
-                    <el-button>{{order_address[index].length>10?String(order_address[index].substr(0,10))+'...':order_address[index]}}</el-button>
-                  </el-tooltip>
-                </td>
-                <td class="el-table_1_column_6"><span style="margin-left: 15px">¥{{order_price[index]}}</span></td>
-                <th class="el-table_1_column_6 is-leaf">
-                  <el-popover
-                    placement="right"
-                    title="菜单详情"
-                    width="350"
-                    trigger="hover"
-                    :content="'菜品：'+order_item[index][0]+order_item[index][3]+order_item[index][6]+order_item[index][9]+order_item[index][12]+order_item[index][15]">
-                    <el-button slot="reference">查看菜单</el-button>
-                  </el-popover>
-                </th>
-              </tr>
+                          <tr v-for="(data,index) in tableData_null" class="el-table__row el-table__row--striped">
+                                <template v-if="tmp_currentTotal+tmp_currentSize<343">
+                                  <td class="el-table_1_column_4">{{'VM000000'+(tmp_currentTotal+index+1)}}</td>
+                                  <td class="el-table_1_column_5">{{order_time[tmp_currentTotal+index]}}</td>
+                                  <td class="el-table_1_column_6">商圈合伙人</td>
+                                  <td class="el-table_1_column_6">{{order_plation[tmp_currentTotal+index]}}</td>
+                                  <td class="el-table_1_column_6">{{order_phone[tmp_currentTotal+index]}}</td>
+                                  <td class="el-table_1_column_6">{{order_name[tmp_currentTotal+index]}}</td>
+                                  <td class="el-table_1_column_6">
+                                    <el-tooltip class="item" effect="dark" :content="order_address[tmp_currentTotal+index]" placement="top-start">
+                                      <el-button>{{order_address[tmp_currentTotal+index].length>10?String(order_address[tmp_currentTotal+index].substr(0,10))+'...':order_address[tmp_currentTotal+index]}}</el-button>
+                                    </el-tooltip>
+                                  </td>
+                                  <td class="el-table_1_column_6"><span style="margin-left: 15px">¥{{order_price[tmp_currentTotal+index]}}</span></td>
+                                  <th class="el-table_1_column_6 is-leaf">
+                                    <el-popover
+                                      placement="right"
+                                      title="菜单详情"
+                                      width="350"
+                                      trigger="hover"
+                                      :content="'菜品：'+order_item[tmp_currentTotal+index][0]+order_item[tmp_currentTotal+index][3]+order_item[tmp_currentTotal+index][6]+order_item[tmp_currentTotal+index][9]+order_item[tmp_currentTotal+index][12]+order_item[tmp_currentTotal+index][15]">
+                                      <el-button slot="reference">查看菜单</el-button>
+                                    </el-popover>
+                                  </th>
+                                </template>
+                                <template v-else>
+                                  <td class="el-table_1_column_4">{{'VM000000'+(tmp_currentTotal+index+1)}}</td>
+                                  <td class="el-table_1_column_5">{{order_time[getRadrom(0,343)]}}</td>
+                                  <td class="el-table_1_column_6">商圈合伙人</td>
+                                  <td class="el-table_1_column_6">{{playtionList[getRadrom(0,9)]}}</td>
+                                  <td class="el-table_1_column_6">{{order_phone[getRadrom(0,343)]}}</td>
+                                  <td class="el-table_1_column_6">{{order_name[getRadrom(0,343)]}}</td>
+                                  <td class="el-table_1_column_6">
+                                    <el-tooltip class="item" effect="dark" :content="order_address[getRadrom(0,343)]" placement="top-start">
+                                      <el-button>{{order_address[getRadrom(0,343)].length>10?String(order_address[getRadrom(0,343)].substr(0,10))+'...':order_address[getRadrom(0,343)]}}</el-button>
+                                    </el-tooltip>
+                                  </td>
+                                  <td class="el-table_1_column_6"><span style="margin-left: 15px">¥{{order_price[getRadrom(0,343)]}}</span></td>
+                                  <th class="el-table_1_column_6 is-leaf">
+                                    <el-popover
+                                      placement="right"
+                                      title="菜单详情"
+                                      width="350"
+                                      trigger="hover"
+                                      :content="'菜品：'+order_item[getRadrom(0,343)][0]+order_item[getRadrom(0,343)][3]+order_item[getRadrom(0,343)][6]+order_item[getRadrom(0,343)][9]+order_item[getRadrom(0,343)][12]+order_item[getRadrom(0,343)][15]">
+                                      <el-button slot="reference">查看菜单</el-button>
+                                    </el-popover>
+                                  </th>
+                                </template>
+                        </tr>
             </table>
           </div>
         </div>
@@ -66,11 +90,11 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[15, 50, 100, 200]"
-        :page-size="100"
+        :current-page="1"
+        :page-sizes="[15, 50]"
+        :page-size="15"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="totalSize">
       </el-pagination>
     </div>
 
@@ -98,18 +122,41 @@ import order_item from './order_item.json'//菜品
         order_price:order_price,
         order_item:order_item,
         orderTableWidth:screen.width/1.3,
-        orderTableHeight:screen.height/1.4,
+//        orderTableHeight:screen.height/1.4,
+        tmp_currentPage: 1,
+        tmp_currentSize: 15,
+        tmp_currentTotal: 0,
+        totalSize: 72424,
+        tableData_null: new Array(15),
+        random: 0,
+        playtionList: ['1号外卖','百度','饿了么','口碑外卖','美团','派乐送','派乐趣','堂食','堂点点','外卖超人','我是外卖'],
       };
+    },
+    watch:{
+      'tmp_currentPage':function () {
+        this.tmp_currentTotal = (this.tmp_currentPage-1)*this.tmp_currentSize;
+        this.random = this.getRadrom(0,343);
+      }
     },
     methods: {
       //点击菜单触发事件
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
-      //加载分类
-      init_data_order(){
-
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+        this.tmp_currentSize = val;
       },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+        this.tmp_currentPage = val;
+      },
+      getRadrom(min,max){
+          var r = Math.random() * (max - min);
+          var re = Math.round(r + min);
+          re = Math.max(Math.min(re, max), min)
+          return re;
+      }
     },
     created() {
 
