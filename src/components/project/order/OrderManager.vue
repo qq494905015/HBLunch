@@ -9,8 +9,28 @@
       </el-submenu>
       <router-link :to="{path:'OrderManager'}"><el-menu-item index="order">订单管理</el-menu-item></router-link>
     </el-menu>
-
     <div>
+      <div class="block">
+        <span class="demonstration">开始时间</span>
+        <el-date-picker
+          v-model="selectStartTime"
+          type="month"
+          placeholder="选择月">
+        </el-date-picker>
+      </div>
+
+      <div class="block2">
+        <span class="demonstration">结束时间</span>
+        <el-date-picker
+          v-model="selectEndTime"
+          type="month"
+          placeholder="选择月">
+        </el-date-picker>
+      </div>
+
+      <div style="width: 200px;display: inline-block">{{selectStartTime_result+'-'+selectEndTime_result}}</div>
+      <el-button type="primary" :style="'margin-left:10%'" v-on:click="queryData">查询</el-button>
+
       <div class="el-table el-table--fit el-table--striped el-table--enable-row-hover el-table--enable-row-transition" :style="'width: '+orderTableWidth+'px;margin-left: 10%;padding: 14px'" >
         <div class="el-table__header-wrapper">
           <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 100%;">
@@ -86,7 +106,7 @@
       </div>
     </div>
 
-    <div class="block">
+    <div class="block" style="margin-left: 10%">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -130,13 +150,36 @@ import order_item from './order_item.json'//菜品
         tableData_null: new Array(15),
         random: 0,
         playtionList: ['1号外卖','百度','饿了么','口碑外卖','美团','派乐送','派乐趣','堂食','堂点点','外卖超人','我是外卖'],
+        selectStartTime: '',
+        selectEndTime:'',
+        selectStartTime_result: '',
+        selectEndTime_result:'',
       };
     },
     watch:{
       'tmp_currentPage':function () {
         this.tmp_currentTotal = (this.tmp_currentPage-1)*this.tmp_currentSize;
         this.random = this.getRadrom(0,343);
+      },
+      'selectStartTime':function () {
+        var year = this.selectStartTime.getUTCFullYear();
+        var month = Number(this.selectStartTime.getMonth())+1;
+        if(month==1){
+          year = Number(year)+1;
+        }
+        var result = year+"年"+month+"月";
+        this.selectStartTime_result = result;
+      },
+      'selectEndTime':function () {
+        var year = this.selectEndTime.getUTCFullYear();
+        var month = Number(this.selectEndTime.getMonth())+1;
+        if(month==1){
+          year = Number(year)+1;
+        }
+        var result = year+"年"+month+"月";
+        this.selectEndTime_result = result;
       }
+
     },
     methods: {
       //点击菜单触发事件
@@ -156,6 +199,14 @@ import order_item from './order_item.json'//菜品
           var re = Math.round(r + min);
           re = Math.max(Math.min(re, max), min)
           return re;
+      },
+      queryData(){
+        if((this.selectStartTime<=this.selectEndTime)===false){
+          this.$message({
+            message: '开始时间必须小于结束时间！',
+            type: 'warning'
+          });
+        }
       }
     },
     created() {
@@ -171,5 +222,13 @@ import order_item from './order_item.json'//菜品
 .item{
   border: none;
   margin-left: -38px;
+}
+.block{
+    display: inline-block;
+    margin-left: 9%;
+    padding: 30px;
+  }
+.block2{
+  display: inline-block;
 }
 </style>
