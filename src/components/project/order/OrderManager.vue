@@ -324,7 +324,4 @@ import orderData from './order_data.json'//订单数据
     margin-left: 9%;
     padding: 30px;
   }
-.block2{
-  display: inline-block;
-}
 </style>
