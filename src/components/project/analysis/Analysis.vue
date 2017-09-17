@@ -52,8 +52,8 @@
         </el-card>
         <el-card class="box-card" :style="'padding: 18px;display: inline-block;'">
           <div>
-            <span>点餐平台数</span>
-            <span style="float: right"><h2>10</h2></span>
+            <span>客单价</span>
+            <span style="float: right"><h2>¥{{orderCustomerCount}}</h2></span>
           </div>
         </el-card>
       </div>
@@ -115,6 +115,7 @@
         orderCountData:orderCountData,
         orderCount:0,//订单数
         orderPrice:0,//营业额
+        orderCustomerCount:0,//客单数
       };
     },
     methods: {
@@ -143,6 +144,7 @@
         var endTime = this.getDate(selectEndTime);
         var totalOrderCount = 0;
         var totalOrderPrice = 0;
+        var totalOrderCustomerCount = 0;
         while ((endTime.getTime() - startTime.getTime()) >= 0) {
           var year = startTime.getFullYear();
           var month = startTime.getMonth().toString().length == 1 ? "0" + startTime.getMonth().toString() : startTime.getMonth().toString();
@@ -154,17 +156,20 @@
             var store = data["店名"];
             var price = Number(data["订单金额"]);
             var orderCount = Number(data["订单数"]);
+            var orderCustomerCount = Number(data["客单价"]);
             if(time == (year + "-" + (month.indexOf("0") == 0 ? month.substr(1, 1) : month) + "-" + (day.indexOf("0") == 0 ? day.substr(1, 1) : day))
               &&  (this.selectStore? this.selectStore == store:true)
             ){
               totalOrderCount+= orderCount;
               totalOrderPrice+= price;
+              totalOrderCustomerCount+= orderCustomerCount;
             }
           }
           startTime.setDate(startTime.getDate() + 1);
         }
         this.orderCount = totalOrderCount;
         this.orderPrice = totalOrderPrice.toFixed(2);
+        this.orderCustomerCount = totalOrderCustomerCount.toFixed(2);
       }
     },
     created() {
