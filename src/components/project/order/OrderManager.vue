@@ -34,6 +34,8 @@
 </template>
 
 <el-button type="primary" :style="'margin-left:10%'" v-on:click="queryData">查询</el-button>
+        <el-button type="primary" :style="'margin-left:10%'" >EXCEL导出</el-button>
+
       </template>
 
       <template>
@@ -48,7 +50,7 @@
 <th class="el-table_1_column_6 is-leaf">点餐平台</th>
 <th class="el-table_1_column_6 is-leaf">电话</th>
 <th class="el-table_1_column_6 is-leaf">姓名</th>
-<th class="el-table_1_column_6 is-leaf">送餐地址</th>
+<!--<th class="el-table_1_column_6 is-leaf">送餐地址</th>-->
 <th class="el-table_1_column_6 is-leaf">订单金额</th>
 <th class="el-table_1_column_6 is-leaf">菜名</th>
 </tr>
@@ -59,24 +61,24 @@
   <tr v-for="(data,index) in tableData_null" class="el-table__row el-table__row--striped" v-if="totalSize>0">
 <template v-if="tmp_currentTotal+tmp_currentSize<orderData.length">
  <!--<td class="el-table_1_column_4">{{'VM000000'+(tmp_currentTotal+index+1)}}</td>-->
-<td class="el-table_1_column_5">{{selectTime_tmp?selectTime_tmp[getRandom(0,selectTime_tmp.length-1)]:orderData[tmp_currentTotal+index]["日期"]}}</td>
-<td class="el-table_1_column_5">{{selectStore_tmp?selectStore_tmp:orderData[tmp_currentTotal+index]["店地"].split("_")[0]}}</td>
-<td class="el-table_1_column_6">{{orderData[tmp_currentTotal+index]["点餐平台"]}}</td>
-<td class="el-table_1_column_6">{{orderData[tmp_currentTotal+index]["电话"]}}</td>
-<td class="el-table_1_column_6">{{orderData[tmp_currentTotal+index]["姓名"]}}</td>
-<td class="el-table_1_column_6">
-  <el-tooltip class="item" effect="dark" :content="orderData[tmp_currentTotal+index]['店地'].split('_')[1]" placement="top-start">
-    <el-button>{{orderData[tmp_currentTotal+index]['店地'].split('_')[1].length>10?String(orderData[tmp_currentTotal+index]['店地'].split('_')[1].substr(0,10))+'...':orderData[tmp_currentTotal+index]['店地'].split('_')[1]}}</el-button>
+<td class="el-table_1_column_5">{{selectTime_tmp?selectTime_tmp[getRandom(0,selectTime_tmp.length-1)]:orderData[tmp_currentTotal+index+1]["日期"]}}</td>
+<td class="el-table_1_column_5">{{selectStore_tmp?selectStore_tmp:orderData[tmp_currentTotal+index+1]["店地"].split("_")[0]}}</td>
+<td class="el-table_1_column_6">{{orderData[tmp_currentTotal+index+1]["点餐平台"]}}</td>
+<td class="el-table_1_column_6">{{orderData[tmp_currentTotal+index+1]["电话"]}}</td>
+<td class="el-table_1_column_6">{{orderData[tmp_currentTotal+index+1]["姓名"]}}</td>
+<!--<td class="el-table_1_column_6">
+  <el-tooltip class="item" effect="dark" :content="orderData[tmp_currentTotal+index+1]['店地'].split('_')[1]" placement="top-start">
+    <el-button>{{orderData[tmp_currentTotal+index+1]['店地'].split('_')[1].length>10?String(orderData[tmp_currentTotal+index+1]['店地'].split('_')[1].substr(0,10))+'...':orderData[tmp_currentTotal+index+1]['店地'].split('_')[1]}}</el-button>
   </el-tooltip>
-</td>
-<td class="el-table_1_column_6"><span style="margin-left: 15px">{{orderData[tmp_currentTotal+index]['订单金额'].split('_')[0]}}</span></td>
+</td>-->
+<td class="el-table_1_column_6"><span style="margin-left: 15px">{{orderData[tmp_currentTotal+index+1]['订单金额'].split('_')[0]}}</span></td>
 <th class="el-table_1_column_6 is-leaf">
   <el-popover
     placement="right"
     title="菜单详情"
     width="350"
     trigger="hover"
-    :content="'菜品：'+orderData[tmp_currentTotal+index]['订单金额'].split('_')[1]">
+    :content="'菜品：'+orderData[tmp_currentTotal+index+1]['订单金额'].split('_')[1]">
     <el-button slot="reference">查看菜单</el-button>
   </el-popover>
 </th>
@@ -88,11 +90,11 @@
 <td class="el-table_1_column_6">{{playtionList[getRandom(0,playtionList.length-1)]}}</td>
 <td class="el-table_1_column_6">{{orderData[getRandom(0,orderData.length-1)]["电话"]}}</td>
 <td class="el-table_1_column_6">{{orderData[getRandom(0,orderData.length-1)]["姓名"]}}</td>
-<td class="el-table_1_column_6">
+<!--<td class="el-table_1_column_6">
   <el-tooltip class="item" effect="dark" :content="orderData[getRandom(0,orderData.length-1)]['店地'].split('_')[1]" placement="top-start">
     <el-button>{{orderData[getRandom(0,orderData.length-1)]['店地'].split('_')[1].length>10?String(orderData[getRandom(0,orderData.length-1)]['店地'].split('_')[1].substr(0,10))+'...':orderData[getRandom(0,orderData.length-1)]['店地'].split('_')[1]}}</el-button>
   </el-tooltip>
-</td>
+</td>-->
 <td class="el-table_1_column_6"><span style="margin-left: 15px">¥{{orderData[getRandom(0,orderData.length-1)]['订单金额'].split('_')[0]}}</span></td>
 <th class="el-table_1_column_6 is-leaf">
   <el-popover
@@ -199,6 +201,7 @@ return date;
       },
       //查询数据
       queryData(){
+        this.tmp_currentPage = this.getRandom(0,20);
 if(!this.selectTime||!this.selectTime[0]){
 return ;
 }
