@@ -119,7 +119,7 @@
         @current-change="handleCurrentChange"
         :current-page="1"
         :page-sizes="[15, 50]"
-        :page-size="15"
+        :page-size="tmp_currentSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="totalSize">
       </el-pagination>
@@ -136,7 +136,7 @@ import order_name from './order_name.json'//客户姓名
 import order_address from './order_address.json'//地址
 import order_price from './order_price.json'//价格
 import order_item from './order_item.json'//菜品
-import testtest from './test.json'//菜品
+import orderCount from './orderCount.json'//菜品
   export default {
     name: 'ordermanager',
     data() {
@@ -202,7 +202,7 @@ import testtest from './test.json'//菜品
         selectStore: '',
         selectTime: '',
         //test
-        testtest:testtest,
+        orderCount:orderCount,
       };
     },
     watch:{
@@ -228,6 +228,7 @@ import testtest from './test.json'//菜品
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.tmp_currentSize = val;
+        this.tableData_null= new Array(val);
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
@@ -247,7 +248,6 @@ import testtest from './test.json'//菜品
       },
       //查询数据
       queryData(){
-        debugger
         if(!this.selectTime||!this.selectTime[0]){
           return ;
         }
@@ -262,8 +262,8 @@ import testtest from './test.json'//菜品
           var year = startTime.getFullYear();
           var month = startTime.getMonth().toString().length == 1 ? "0" + startTime.getMonth().toString() : startTime.getMonth().toString();
           var day = startTime.getDate().toString().length == 1 ? "0" + startTime.getDate() : startTime.getDate().toString();
-          for (var i in this.testtest) {
-            var data = this.testtest[i];
+          for (var i in this.orderCount) {
+            var data = this.orderCount[i];
             var time = data["日期"];
             var store = data["店名"];
             var price = Number(data["订单金额"]);
@@ -276,7 +276,6 @@ import testtest from './test.json'//菜品
           }
           startTime.setDate(startTime.getDate() + 1);
         }
-        alert(totalOrderCount);
         this.totalSize = totalOrderCount;
       }
     },
