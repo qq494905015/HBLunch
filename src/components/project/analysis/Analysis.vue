@@ -59,12 +59,21 @@
       </div>
     </template>
 
+    <template>
+      <schart :canvasId="chart.canvasId" :type="chart.type" :width="chart.width" style="margin-left: 10%"
+              :height="chart.height" :data="chart.data" :options="chart.options"></schart>
+    </template>
+
   </div>
 </template>
 <script>
   import orderCountData from '../order/order_count.json'//订单数量
+  import Schart from 'vue-schart' //图表制作
   export default {
     name: 'analysis',
+    components:{
+      Schart
+    },
     data() {
       return {
         activeIndex: 'analysis',
@@ -116,6 +125,28 @@
         orderCount:0,//订单数
         orderPrice:0,//营业额
         orderCustomerCount:0,//客单数
+        //图表制作
+        chart:{
+          canvasId: 'myCanvas',
+          type: 'bar',
+          width: screen.width/1.3,
+          height: 400,
+          data: [ ],
+          options: {
+            padding: 50,                   // canvas 内边距
+            bgColor: '#FFFFFF',            // 默认背景颜色
+            title: '门店-营业额图表',// 图表标题
+            titleColor: '#000000',         // 图表标题颜色
+            titlePosition: 'top',    // 图表标题位置: top / bottom
+            yEqual: 5,                     // y轴分成5等分
+            fillColor: '#1E9FFF',          // 默认填充颜色
+            contentColor: '#eeeeee',       // 内容横线颜色
+            axisColor: '#666666',          // 坐标轴颜色
+          }
+        }
+
+
+
       };
     },
     methods: {
@@ -145,6 +176,9 @@
         var totalOrderCount = 0;
         var totalOrderPrice = 0;
         var totalOrderCustomerCount = 0;
+        //门店-营业额图表数据数组
+        this.chart.data = [];
+
         while ((endTime.getTime() - startTime.getTime()) >= 0) {
           var year = startTime.getFullYear();
           var month = startTime.getMonth().toString().length == 1 ? "0" + startTime.getMonth().toString() : startTime.getMonth().toString();
@@ -163,6 +197,21 @@
               totalOrderCount+= orderCount;
               totalOrderPrice+= price;
               totalOrderCustomerCount+= orderCustomerCount;
+              debugger
+              var flagBreak = true;
+              for(var j in  this.chart.data){
+                if(this.chart.data[j].name == store){
+                  this.chart.data[j].value = (Number(this.chart.data[j].value) + price).toFixed(2);
+                  flagBreak = false
+                }
+              }
+              if(flagBreak){
+                var chartStore = {
+                  "name":store,
+                  "value":price.toFixed(2)
+                }
+                this.chart.data.push(chartStore);
+              }
             }
           }
           startTime.setDate(startTime.getDate() + 1);
@@ -170,6 +219,9 @@
         this.orderCount = totalOrderCount;
         this.orderPrice = totalOrderPrice.toFixed(2);
         this.orderCustomerCount = totalOrderCustomerCount.toFixed(2);
+
+
+
       }
     },
     created() {
