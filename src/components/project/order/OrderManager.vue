@@ -58,9 +58,9 @@
                   <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 100%;">
                                 <tr v-for="(data,index) in tableData_null" class="el-table__row el-table__row--striped" v-if="totalSize>0">
                                       <template v-if="tmp_currentTotal+tmp_currentSize<orderData.length">
-                                        <!--<td class="el-table_1_column_4">{{'VM000000'+(tmp_currentTotal+index+1)}}</td>-->
-                                        <td class="el-table_1_column_5">{{orderData[tmp_currentTotal+index]["日期"]}}</td>
-                                        <td class="el-table_1_column_5">{{orderData[tmp_currentTotal+index]["店名"]}}</td>
+                                       <!--<td class="el-table_1_column_4">{{'VM000000'+(tmp_currentTotal+index+1)}}</td>-->
+                                        <td class="el-table_1_column_5">{{selectTime_tmp?selectTime_tmp[getRandom(0,selectTime_tmp.length-1)]:orderData[tmp_currentTotal+index]["日期"]}}</td>
+                                        <td class="el-table_1_column_5">{{selectStore_tmp?selectStore_tmp:orderData[tmp_currentTotal+index]["店名"]}}</td>
                                         <td class="el-table_1_column_6">{{orderData[tmp_currentTotal+index]["点餐平台"]}}</td>
                                         <td class="el-table_1_column_6">{{orderData[tmp_currentTotal+index]["电话"]}}</td>
                                         <td class="el-table_1_column_6">{{orderData[tmp_currentTotal+index]["姓名"]}}</td>
@@ -98,18 +98,18 @@
                                         </th>
                                       </template>
                                       <template v-else>
-                                        <td class="el-table_1_column_4">{{'VM000000'+(tmp_currentTotal+index+1)}}</td>
+                                        <!--<td class="el-table_1_column_4">{{'VM000000'+(tmp_currentTotal+index+1)}}</td>-->
                                         <td class="el-table_1_column_5">{{selectTime_tmp[getRandom(0,selectTime_tmp.length-1)]}}</td>
-                                        <td class="el-table_1_column_5">{{selectStore?selectStore:orderData[random]["店名"]}}</td>
-                                        <td class="el-table_1_column_6">{{orderData[random]["点餐平台"]}}</td>
-                                        <td class="el-table_1_column_6">{{orderData[random]["电话"]}}</td>
-                                        <td class="el-table_1_column_6">{{orderData[random]["姓名"]}}</td>
+                                        <td class="el-table_1_column_5">{{selectStore_tmp?selectStore_tmp:store[getRandom(0,store.length-1)].value}}</td>
+                                        <td class="el-table_1_column_6">{{playtionList[getRandom(0,playtionList.length-1)]}}</td>
+                                        <td class="el-table_1_column_6">{{orderData[getRandom(0,orderData.length-1)]["电话"]}}</td>
+                                        <td class="el-table_1_column_6">{{orderData[getRandom(0,orderData.length-1)]["姓名"]}}</td>
                                         <td class="el-table_1_column_6">
-                                          <el-tooltip class="item" effect="dark" :content="orderData[random]['送餐地址']" placement="top-start">
-                                            <el-button>{{orderData[random]['送餐地址'].length>10?String(orderData[random]['送餐地址'].substr(0,10))+'...':orderData[random]['送餐地址']}}</el-button>
+                                          <el-tooltip class="item" effect="dark" :content="orderData[getRandom(0,orderData.length-1)]['送餐地址']" placement="top-start">
+                                            <el-button>{{orderData[getRandom(0,orderData.length-1)]['送餐地址'].length>10?String(orderData[getRandom(0,orderData.length-1)]['送餐地址'].substr(0,10))+'...':orderData[getRandom(0,orderData.length-1)]['送餐地址']}}</el-button>
                                           </el-tooltip>
                                         </td>
-                                        <td class="el-table_1_column_6"><span style="margin-left: 15px">¥{{orderData[random]['订单金额']}}</span></td>
+                                        <td class="el-table_1_column_6"><span style="margin-left: 15px">¥{{orderData[getRandom(0,orderData.length-1)]['订单金额']}}</span></td>
                                         <th class="el-table_1_column_6 is-leaf">
                                           <el-popover
                                             placement="right"
@@ -160,14 +160,6 @@
   </div>
 </template>
 <script>
-//  import order_2017_09 from './order_2017_09.json'
-import order_time from './order_time.json'//时间
-import order_plation from './order_plation.json'//平台
-import order_phone from './order_phone.json'//手机
-import order_name from './order_name.json'//客户姓名
-import order_address from './order_address.json'//地址
-import order_price from './order_price.json'//价格
-import order_item from './order_item.json'//菜品
 import orderCount from './order_count.json'//订单数量
 import orderData from './order_data.json'//订单数据
   export default {
@@ -175,13 +167,6 @@ import orderData from './order_data.json'//订单数据
     data() {
       return {
         activeIndex: 'order',
-        order_time:order_time,
-        order_plation:order_plation,
-        order_phone:order_phone,
-        order_name:order_name,
-        order_address:order_address,
-        order_price:order_price,
-        order_item:order_item,
         orderTableWidth:screen.width/1.3,
 //        orderTableHeight:screen.height/1.4,
         tmp_currentPage: 1,
@@ -244,15 +229,12 @@ import orderData from './order_data.json'//订单数据
         this.tmp_currentTotal = (this.tmp_currentPage-1)*this.tmp_currentSize;
         this.random = this.getRandom(0,this.orderData.length);
       },
-      'selectStartTime':function () {
-        var year = this.selectStartTime.getUTCFullYear();
-        var month = Number(this.selectStartTime.getMonth())+1;
-        if(month==1){
-          year = Number(year)+1;
-        }
-        var result = year+"年"+month+"月";
-        this.selectStartTime_result = result;
+      'selectTime':function () {
+        //this.orderCount = 0;
       },
+      'selectStore':function () {
+        //this.orderCount = 0;
+      }
     },
     methods: {
       //点击菜单触发事件
@@ -275,6 +257,13 @@ import orderData from './order_data.json'//订单数据
           re = Math.max(Math.min(re, max), min)
           return re;
       },
+      setRandom(min,max){
+        var r = Math.random() * (max - min);
+        var re = Math.round(r + min);
+        re = Math.max(Math.min(re, max), min)
+        this.random = re;
+
+      },
       getDate(datestr) {
         var temp = datestr.split("-");
         var date = new Date(temp[0], temp[1], temp[2]);
@@ -293,6 +282,7 @@ import orderData from './order_data.json'//订单数据
         var endTime = this.getDate(selectEndTime);
         var totalOrderCount = 0;
         this.selectTime_tmp = [];
+        this.selectStore_tmp = this.selectStore;
         while ((endTime.getTime() - startTime.getTime()) >= 0) {
           var year = startTime.getFullYear();
           var month = startTime.getMonth().toString().length == 1 ? "0" + startTime.getMonth().toString() : startTime.getMonth().toString();
@@ -312,7 +302,6 @@ import orderData from './order_data.json'//订单数据
           }
           startTime.setDate(startTime.getDate() + 1);
         }
-        debugger
         this.totalSize = totalOrderCount;
       }
     },
