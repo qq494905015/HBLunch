@@ -10,12 +10,6 @@ Vue.use(vueXlsxTable, {rABS: false})
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 Vue.use(Element)
-//引入icon
-import 'vue-awesome/icons/flag'
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
-Vue.component('icon', Icon)
-
 
 //
 Vue.config.productionTip = false

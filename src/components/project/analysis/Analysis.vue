@@ -38,7 +38,7 @@
 
     <template >
       <div :style="'height: 127px;margin-left:10%;background-color: #d9d9d9;width:'+orderTableWidth+'px'">
-        <el-card class="box-card" :style="'padding: 18px;display:inline-block;margin-left:13px'">
+        <el-card class="box-card" :style="'padding: 18px;display:inline-block;margin-left:20px'">
           <div>
             <span >营业额</span>
             <span style="float: right;"><h2>¥{{orderPrice}}</h2></span>
@@ -239,6 +239,6 @@
     padding: 30px;
   }
   .box-card {
-    width: 30%;
+    width: 28%;
   }
 </style>
