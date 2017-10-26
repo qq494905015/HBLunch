@@ -76,7 +76,16 @@
                     <td class="el-table_1_column_5">{{data.name}}</td>
                     <td class="el-table_1_column_5">{{data.address}}</td>
                     <td class="el-table_1_column_5">{{data.orderprice}}</td>
-                    <td class="el-table_1_column_5">{{data.items}}</td>
+                    <td class="el-table_1_column_6 is-leaf">
+                      <el-popover
+                        placement="right"
+                        title="菜单详情"
+                        width="350"
+                        trigger="hover"
+                        :content="'菜品：'+data.items">
+                        <el-button slot="reference">查看菜单</el-button>
+                      </el-popover>
+                    </td>
                 </tr>
               </table>
             </div>
@@ -157,23 +166,34 @@
         ];*/
        var THAT = this;
        var params = THAT.getParams();
-        api.queryPageOrder(params).then((response) => {
-          debugger
-          if(response.data){
-            THAT.tableData = response.data.list;
-            THAT.totalSize = response.data.total;
-          }
-        }).catch((response) => {
-          console.info(response);
-         // Indicator.close();
-          //Toast("访问超时");
-        });
+       if(params){
+         api.queryPageOrder(params).then((response) => {
+           if(response.data){
+             THAT.tableData = response.data.list;
+             THAT.totalSize = response.data.total;
+           }
+         }).catch((response) => {
+           console.info(response);
+           // Indicator.close();
+           //Toast("访问超时");
+         });
+       }
       },
       getParams(){
         var THAT = this;
         var params = {};
         var selectStartTime = this.selectTime[0];
         var selectEndTime = this.selectTime[1];
+        var selectStore = THAT.selectStore;
+        if(!selectStartTime||!selectEndTime){
+          THAT.$message({message: '请选择日期再查询',type: 'warning' });
+          return false;
+        }
+        if(!selectStore){
+          THAT.$message({message: '请选择门店再查询',type: 'warning' });
+          return false;
+        }
+
         selectStartTime = selectStartTime.getFullYear() + "-" + (((selectStartTime.getMonth() + 1).toString().length == 1 ? "0" + (selectStartTime.getMonth() + 1).toString() : (selectStartTime.getMonth() + 1).toString())) + "-" + ((selectStartTime.getDate()).toString().length == 1 ? "0" + (selectStartTime.getDate()).toString() : (selectStartTime.getDate()).toString());
         selectEndTime = selectEndTime.getFullYear() + "-" + (((selectEndTime.getMonth() + 1).toString().length == 1 ? "0" + (selectEndTime.getMonth() + 1).toString() : (selectEndTime.getMonth() + 1).toString())) + "-" + ((selectEndTime.getDate()).toString().length == 1 ? "0" + (selectEndTime.getDate()).toString() : (selectEndTime.getDate()).toString());
         var startTime = this.getDate(selectStartTime);
@@ -182,7 +202,7 @@
         params.rows = THAT.tmp_currentSize;
         params.selectStartTime = selectStartTime;
         params.selectEndTime = selectEndTime;
-        params.storename = THAT.selectStore;
+        params.storename = selectStore;
         return params;
       }
     },
