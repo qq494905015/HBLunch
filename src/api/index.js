@@ -1,5 +1,11 @@
-//加载excel模块
-// var xlsx = require('node-xlsx');
-// var fs = require("fs");
+import config from './config'
+import axios from 'axios'
+
 export default {
+  queryPageOrder (param) {
+    var method = '/back/orderResource/queryOrderList'
+    return axios.post(method, JSON.stringify(param), config)
+  },
+
 }
+

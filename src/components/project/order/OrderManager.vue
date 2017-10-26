@@ -69,7 +69,7 @@
               <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 100%;">
                 <tr v-for="(data,index) in tableData" class="el-table__row el-table__row--striped">
                     <td class="el-table_1_column_5">{{data.orderid}}</td>
-                    <td class="el-table_1_column_5">{{data.type}}</td>
+                    <td class="el-table_1_column_5">{{data.orderdate}}</td>
                     <td class="el-table_1_column_5">{{data.storename}}</td>
                     <td class="el-table_1_column_5">{{data.plation}}</td>
                     <td class="el-table_1_column_5">{{data.phone}}</td>
@@ -90,7 +90,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="1"
-        :page-sizes="[15, 50]"
+        :page-sizes="[10,20,50]"
         :page-size="tmp_currentSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="totalSize">
@@ -100,6 +100,7 @@
   </div>
 </template>
 <script>
+  import api from '../../../api/';
   export default {
     name: 'ordermanager',
     data() {
@@ -107,7 +108,7 @@
         activeIndex: 'order',
         orderTableWidth: screen.width / 1.3,
         tmp_currentPage: 1,
-        tmp_currentSize: 15,
+        tmp_currentSize: 10,
         tmp_currentTotal: 0,
         totalSize: 0,
         selectStore: '', selectStore_tmp: [],
@@ -151,10 +152,38 @@
       },
       //查询数据
       queryData() {
-        this.tableData = [
+       /* this.tableData = [
           {orderid:'123','orderdate':'2017-10-24','type':'1','storename':'白云区','plation':'饿了么','phone':'13798003831','name':'老王','address':'皇后大道东','orderprice':'12'}
-        ];
-        //this.totalSize = 10;
+        ];*/
+       var THAT = this;
+       var params = THAT.getParams();
+        api.queryPageOrder(params).then((response) => {
+          debugger
+          if(response.data){
+            THAT.tableData = response.data.list;
+            THAT.totalSize = response.data.total;
+          }
+        }).catch((response) => {
+          console.info(response);
+         // Indicator.close();
+          //Toast("访问超时");
+        });
+      },
+      getParams(){
+        var THAT = this;
+        var params = {};
+        var selectStartTime = this.selectTime[0];
+        var selectEndTime = this.selectTime[1];
+        selectStartTime = selectStartTime.getFullYear() + "-" + (((selectStartTime.getMonth() + 1).toString().length == 1 ? "0" + (selectStartTime.getMonth() + 1).toString() : (selectStartTime.getMonth() + 1).toString())) + "-" + ((selectStartTime.getDate()).toString().length == 1 ? "0" + (selectStartTime.getDate()).toString() : (selectStartTime.getDate()).toString());
+        selectEndTime = selectEndTime.getFullYear() + "-" + (((selectEndTime.getMonth() + 1).toString().length == 1 ? "0" + (selectEndTime.getMonth() + 1).toString() : (selectEndTime.getMonth() + 1).toString())) + "-" + ((selectEndTime.getDate()).toString().length == 1 ? "0" + (selectEndTime.getDate()).toString() : (selectEndTime.getDate()).toString());
+        var startTime = this.getDate(selectStartTime);
+        var endTime = this.getDate(selectEndTime);
+        params.page = THAT.tmp_currentPage;
+        params.rows = THAT.tmp_currentSize;
+        params.selectStartTime = selectStartTime;
+        params.selectEndTime = selectEndTime;
+        params.storename = THAT.selectStore;
+        return params;
       }
     },
     created() {
