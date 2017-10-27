@@ -9,6 +9,7 @@ Vue.use(vueXlsxTable, {rABS: false})
 //引入UI控件
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import $ from 'jquery'
 Vue.use(Element)
 
 //

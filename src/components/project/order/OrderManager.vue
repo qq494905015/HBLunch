@@ -67,24 +67,32 @@
             </table>
             <div class="el-table__body-wrapper">
               <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 100%;">
+                <template v-if="tableData.length==0">
+                  <tr>
+                    <td colspan="9" style="text-align: center">查无数据</td>
+                  </tr>
+                </template>
                 <tr v-for="(data,index) in tableData" class="el-table__row el-table__row--striped">
-                    <td class="el-table_1_column_5">{{data.orderid}}</td>
-                    <td class="el-table_1_column_5">{{data.orderdate}}</td>
-                    <td class="el-table_1_column_5">{{data.storename}}</td>
+                    <td class="el-table_1_column_5">{{data.orderId}}</td>
+                    <td class="el-table_1_column_5">{{data.orderDate}}</td>
+                    <td class="el-table_1_column_5">{{data.storeName}}</td>
                     <td class="el-table_1_column_5">{{data.plation}}</td>
                     <td class="el-table_1_column_5">{{data.phone}}</td>
                     <td class="el-table_1_column_5">{{data.name}}</td>
                     <td class="el-table_1_column_5">{{data.address}}</td>
-                    <td class="el-table_1_column_5">{{data.orderprice}}</td>
+                    <td class="el-table_1_column_5">{{data.orderPrice}}</td>
+                      <!--<template v-for="(name,index) in String(data.menuName).split(',')">
+                          {{name+'*'+String(data.menuCount).split(',')[index]+' ￥'+String(data.menuPrice).split(',')[index]}}
+                      </template>-->
                     <td class="el-table_1_column_6 is-leaf">
-                      <el-popover
-                        placement="right"
-                        title="菜单详情"
-                        width="350"
-                        trigger="hover"
-                        :content="'菜品：'+data.items">
-                        <el-button slot="reference">查看菜单</el-button>
-                      </el-popover>
+                      <span>
+                        <div class="el-popover" :id="'menuTip'+index" style="width: 350px; display: none;    left: -376px;">
+                          <template v-for="(name,menuIndex) in String(data.menuName).split(',')">
+                            {{name=='null'?'暂无点菜':(name+'*'+String(data.menuCount).split(',')[menuIndex]+' ￥'+String(data.menuPrice).split(',')[menuIndex])}}</br>
+                         </template>
+                        </div>
+                        <el-button @click="queryMenu('menuTip'+index)" >查看菜单</el-button>
+                      </span>
                     </td>
                 </tr>
               </table>
@@ -153,6 +161,7 @@
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.tmp_currentPage = val;
+        this.queryData();
       },
       getDate(datestr) {
         var temp = datestr.split("-");
@@ -202,8 +211,15 @@
         params.rows = THAT.tmp_currentSize;
         params.selectStartTime = selectStartTime;
         params.selectEndTime = selectEndTime;
-        params.storename = selectStore;
+        params.storeName = selectStore;
         return params;
+      },
+      queryMenu(data){
+        if($('#'+data).is(':visible')){
+          $('#'+data).hide();
+        }else{
+          $('#'+data).show();
+        }
       }
     },
     created() {
