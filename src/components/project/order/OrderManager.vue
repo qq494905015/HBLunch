@@ -174,15 +174,23 @@
           {orderid:'123','orderdate':'2017-10-24','type':'1','storename':'白云区','plation':'饿了么','phone':'13798003831','name':'老王','address':'皇后大道东','orderprice':'12'}
         ];*/
        var THAT = this;
-       var params = THAT.getParams();
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        var params = THAT.getParams();
        if(params){
          api.queryPageOrder(params).then((response) => {
            if(response.data){
              THAT.tableData = response.data.list;
              THAT.totalSize = response.data.total;
+             loading.close();
            }
          }).catch((response) => {
            console.info(response);
+           THAT.fullscreenLoading = false;
            // Indicator.close();
            //Toast("访问超时");
          });
