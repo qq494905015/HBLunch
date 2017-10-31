@@ -1,15 +1,6 @@
 <template>
   <div>
-    <el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-      <router-link :to="{path:'Analysis'}"><el-menu-item index="analysis">分析统计 </el-menu-item></router-link>
-      <el-submenu index="menu">
-        <template slot="title">菜单管理</template>
-        <router-link :to="{path:'Menu_class'}"><el-menu-item index="menu_class">菜品分类管理</el-menu-item></router-link>
-        <router-link :to="{path:'Menu_dishes'}"><el-menu-item index="menu_dishes">菜品管理</el-menu-item></router-link>
-      </el-submenu>
-      <router-link :to="{path:'OrderManager'}"><el-menu-item index="order">订单管理</el-menu-item></router-link>
-    </el-menu>
-
+    <app-header :activeIndex="activeIndex"></app-header>
     <div class="el-table el-table--fit el-table--striped el-table--enable-row-hover el-table--enable-row-transition" style="width: 100%">
       <div class="el-table__header-wrapper">
         <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 100%;">
@@ -40,9 +31,12 @@
 </template>
 <script>
   import data from './dishes.json'
-
+  import main from '../Main.vue';
   export default {
     name: 'menu_dishes',
+    components:{
+      appHeader:main
+    },
     data() {
       return {
         activeIndex: 'menu_dishes',

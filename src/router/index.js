@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import Order from '@/components/project/order/Order'
-import Main from '@/components/project/Main'
+import Login from '@/components/project/login/Login'
 import Menu_class from '@/components/project/menu/Menu_class'
 import Menu_dishes from '@/components/project/menu/Menu_dishes'
 import Analysis from '@/components/project/analysis/Analysis'
-import OrderManager from '@/components/project/order/OrderManager'
+import Order_his from '@/components/project/order/OrderHis'
+import Order_new from '@/components/project/order/OrderNew'
 
 Vue.use(Router)
 
@@ -14,13 +13,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Main',
-      component: Main
+      name: 'Login',
+      component: Login
     },
     {
-      path: '/Order',
-      name: 'Order',
-      component: Order
+      path: '/Order_his',
+      name: 'Order_his',
+      component: Order_his
+    },
+    {
+      path: '/Order_new',
+      name: 'Order_new',
+      component: Order_new
     },
     {
       path: '/Menu_class',
@@ -37,11 +41,5 @@ export default new Router({
       name: 'Analysis',
       component: Analysis
     },
-    {
-      path: '/OrderManager',
-      name: 'OrderManager',
-      component: OrderManager
-    },
-
   ]
 })

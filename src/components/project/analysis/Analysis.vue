@@ -1,16 +1,6 @@
 <template>
   <div>
-    <el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-      <router-link :to="{path:'Analysis'}"><el-menu-item index="analysis">分析统计 </el-menu-item></router-link>
-      <el-submenu index="menu">
-        <template slot="title">菜单管理</template>
-        <router-link :to="{path:'Menu_class'}"><el-menu-item index="menu_class">菜品分类管理</el-menu-item></router-link>
-        <router-link :to="{path:'Menu_dishes'}"><el-menu-item index="menu_dishes">菜品管理</el-menu-item></router-link>
-      </el-submenu>
-      <router-link :to="{path:'OrderManager'}"><el-menu-item index="order">订单管理</el-menu-item></router-link>
-    </el-menu>
-
-
+    <app-header :activeIndex="activeIndex"></app-header>
     <template>
       <div class="block">
         <span class="demonstration">日期筛选</span>
@@ -41,7 +31,7 @@
         <el-card class="box-card" :style="'padding: 18px;display:inline-block;margin-left:20px'">
           <div>
             <span >营业额</span>
-            <span style="float: right;"><h2>¥{{orderPrice}}</h2></span>
+            <span style="float: right;"><h2 >¥{{orderPrice}}</h2></span>
           </div>
         </el-card>
         <el-card class="box-card" :style="'padding: 18px;display: inline-block;'">
@@ -67,12 +57,13 @@
   </div>
 </template>
 <script>
+  import appHeader from '../Main.vue';
   import orderCountData from '../order/order_count.json'//订单数量
   import Schart from 'vue-schart' //图表制作
   export default {
     name: 'analysis',
     components:{
-      Schart
+      Schart,appHeader
     },
     data() {
       return {
@@ -179,7 +170,6 @@
         var totalOrderCustomerCount = 0;
         //门店-营业额图表数据数组
         this.chart.data = [];
-        debugger
         while ((endTime.getTime() - startTime.getTime()) >= 0) {
           var year = startTime.getFullYear();
           var month = startTime.getMonth().toString().length == 1 ? "0" + startTime.getMonth().toString() : startTime.getMonth().toString();
@@ -199,7 +189,6 @@
               totalOrderCount+= orderCount;
               totalOrderPrice+= price;
               totalOrderCustomerPrice += orderCustomerPrice
-              debugger
               var flagBreak = true;
               for(var j in  this.chart.data){
                 if(this.chart.data[j].name == store){
@@ -227,9 +216,11 @@
       }
     },
     created() {
-
     },
     mounted: function () {
+      $("body").css(
+        "background","none"
+      )
     }
   }
 </script>
