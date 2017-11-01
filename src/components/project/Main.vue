@@ -22,6 +22,9 @@
           <router-link :to="{path:'Order_new'}">
             <el-menu-item index="order_new">动态订单</el-menu-item>
           </router-link>
+          <router-link :to="{path:'Order_insert'}" v-if="userInfo&&userInfo.type == '1'">
+            <el-menu-item index="order_insert">模拟订单(测试)</el-menu-item>
+          </router-link>
         </el-submenu>
         <div style="float: right;display: inline-block;padding: 19px;color:white;cursor: pointer" v-on:click="loginOut">
           <template v-if="userInfo">当前门店：{{userInfo.role}} </template>

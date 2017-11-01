@@ -7,6 +7,7 @@ import Menu_dishes from '@/components/project/menu/Menu_dishes'
 import Analysis from '@/components/project/analysis/Analysis'
 import Order_his from '@/components/project/order/OrderHis'
 import Order_new from '@/components/project/order/OrderNew'
+import Order_insert from '@/components/project/order/OrderInsert'
 
 Vue.use(Router)
 
@@ -31,6 +32,11 @@ export default new Router({
       path: '/Order_new',
       name: 'Order_new',
       component: Order_new
+    },
+    {
+      path: '/Order_insert',
+      name: 'Order_insert',
+      component: Order_insert
     },
     {
       path: '/Menu_class',

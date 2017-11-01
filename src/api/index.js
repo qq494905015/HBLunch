@@ -27,8 +27,11 @@ export default {
     var method = '/back/orderResource/countOrderMenuForChart'
     return axios.post(method, JSON.stringify(param), config)
   },
-
-
+  //新增订单
+  insertOrder (param) {
+    var method = '/back/orderResource/insertOrder'
+    return axios.post(method, JSON.stringify(param), config)
+  },
 
 }
 
