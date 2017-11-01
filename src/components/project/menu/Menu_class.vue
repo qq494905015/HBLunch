@@ -52,7 +52,9 @@
     created() {
     },
     mounted: function () {
-
+      $("body").css(
+        "background","none"
+      )
 
     }
   }

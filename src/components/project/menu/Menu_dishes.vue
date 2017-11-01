@@ -57,6 +57,9 @@
 
     },
     mounted: function () {
+      $("body").css(
+        "background","none"
+      )
     }
   }
 </script>

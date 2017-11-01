@@ -23,6 +23,9 @@
             <el-menu-item index="order_new">动态订单</el-menu-item>
           </router-link>
         </el-submenu>
+        <div style="float: right;display: inline-block;padding: 19px;color:white;cursor: pointer" v-on:click="loginOut">
+          <template v-if="userInfo">当前门店：{{userInfo.role}} </template>
+        </div>
       </el-menu>
     </div>
   </div>
@@ -36,6 +39,7 @@
     data() {
       return {
         activeIndexTmp: '',
+        userInfo:undefined,
       };
     },
     methods: {
@@ -43,6 +47,24 @@
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
+      loginOut(){
+        var THAT = this ;
+        this.$confirm('是否注销该用户?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          //清除用户信息缓存
+          sessionStorage.removeItem("userInfo");
+          this.$message({
+            type: 'success',
+            message: '注销成功，正在跳转登录页面!'
+          });
+          THAT.$router.push({ name: '/'})
+        }).catch(() => {
+
+        });
+      }
     },
     watch:{
       'activeIndexTmp':function (obj,obj2) {
@@ -54,6 +76,8 @@
     },
     mounted: function () {
       this.activeIndexTmp = this.activeIndex;
+     // this.userInfo = this.$route.params.userInfo;
+      this.userInfo = eval('('+sessionStorage.getItem("userInfo")+')');
     }
   }
 </script>

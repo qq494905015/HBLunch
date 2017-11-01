@@ -31,6 +31,7 @@
 
 <script>
   import api from '../../../api/';
+  import img1 from '../../../assets/login/img/1.jpg';
   export default {
     name: 'login',
     data() {
@@ -43,10 +44,6 @@
       };
     },
     methods: {
-      // 重置表单
-      handleReset () {
-        this.$refs.ruleForm.resetFields()
-      },
       handleSubmit () {
         // 验证表单
         var THAT = this;
@@ -55,7 +52,8 @@
           api.queryLoginInfo(this.formParams).then((response) => {
             if(response.data){
               THAT.$message({message: '登录成功 正在跳转...',type: 'success' });
-              THAT.$router.push('/Analysis')
+              THAT.$router.push({ name: 'Main', params: { userInfo: response.data }})
+              sessionStorage.setItem("userInfo", JSON.stringify(response.data));
               loading.close();
             }else{
               loading.close();
@@ -74,6 +72,9 @@
 
     },
     mounted: function () {
+      $("body").css(
+        {"background":"url('"+img1+"') no-repeat 0px 0px","background-size":"cover","background-attachment": "fixed","background-position": "center"},
+      )
     }
   }
 </script>

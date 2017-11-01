@@ -3,7 +3,7 @@
     <app-header :activeIndex="activeIndex"></app-header>
     <div :style="'width:'+(orderTableWidth-25)+'px;margin-left: 10%;margin-bottom:1%;padding: 20px'">
       <div style="display: inline-block;">
-        <template>
+        <template v-if="userInfo&&userInfo.type =='1'">
           <span class="demonstration">门店筛选</span>
           <el-select v-model="selectStore" clearable placeholder="请选择门店">
             <el-option
@@ -116,6 +116,7 @@
         }, {value: '天河壹区', label: '天河壹区'}, {value: '越秀区', label: '越秀区'}],
         tableData:[],
         setTimeOutParams:null,
+        userInfo:undefined
       };
     },
     watch: {
@@ -150,7 +151,7 @@
               loading.close();
             }else{
               loading.close();
-              THAT.$message({message: '访问超时',type: 'error' });
+              THAT.$message({message: '数据响应错误',type: 'error' });
             }
           }).catch((response) => {
             loading.close();
@@ -199,6 +200,13 @@
     created() {
     },
     mounted: function () {
+      $("body").css(
+        "background","none"
+      )
+      this.userInfo = eval('('+sessionStorage.getItem("userInfo")+')');
+      if(this.userInfo&&this.userInfo.type=='2'){
+        this.selectStore = this.userInfo.role;
+      }
       var THAT = this ;
       THAT.queryData();
       //轮询  5秒调用一次 查询最新的订单

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <app-header :activeIndex="activeIndex"></app-header>
+    <app-header :activeIndex="activeIndex" ref="header"></app-header>
     <div>
       <template>
         <div class="block">
@@ -12,7 +12,7 @@
           </el-date-picker>
         </div>
 
-        <template>
+        <template v-if="userInfo&&userInfo.type =='1'">
           <span class="demonstration">门店筛选</span>
           <el-select v-model="selectStore" clearable placeholder="请选择门店">
             <el-option
@@ -125,6 +125,7 @@
           label: '天河贰区'
         }, {value: '天河壹区', label: '天河壹区'}, {value: '越秀区', label: '越秀区'}],
         tableData:[],
+        userInfo:undefined
       };
     },
     watch: {
@@ -212,6 +213,13 @@
 
     },
     mounted: function () {
+      $("body").css(
+        "background","none"
+      )
+      this.userInfo = eval('('+sessionStorage.getItem("userInfo")+')');
+      if(this.userInfo&&this.userInfo.type=='2'){
+        this.selectStore = this.userInfo.role;
+      }
 
     }
   }

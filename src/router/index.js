@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Main from '@/components/project/Main'
 import Login from '@/components/project/login/Login'
 import Menu_class from '@/components/project/menu/Menu_class'
 import Menu_dishes from '@/components/project/menu/Menu_dishes'
@@ -15,6 +16,11 @@ export default new Router({
       path: '/',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/Main',
+      name: 'Main',
+      component: Main
     },
     {
       path: '/Order_his',

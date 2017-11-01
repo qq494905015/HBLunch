@@ -17,5 +17,18 @@ export default {
     var method = '/back/orderResource/queryLoginInfo'
     return axios.post(method, JSON.stringify(param), config)
   },
+  //统计营业额
+  countOrderPriceForChart (param) {
+    var method = '/back/orderResource/countOrderPriceForChart'
+    return axios.post(method, JSON.stringify(param), config)
+  },
+  //统计菜品分额
+  countOrderMenuForChart (param) {
+    var method = '/back/orderResource/countOrderMenuForChart'
+    return axios.post(method, JSON.stringify(param), config)
+  },
+
+
+
 }
 
