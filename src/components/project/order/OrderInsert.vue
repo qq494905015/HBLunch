@@ -154,9 +154,9 @@
       submitForm(formName) {
         var THAT = this;
         this.$refs[formName].validate((valid) => {
-          if (!valid) {
-//            var params = THAT.getParams();
-            var params =
+          if (valid) {
+            var params = THAT.getParams();
+           /* var params =
               {
                 address: "234567890",
                 menuCount: "1",
@@ -168,10 +168,9 @@
                 plation: "1号外卖",
                 storeName: "海珠区",
                 type: '1'
-              }
+              }*/
             const loading = this.$loading({lock: true, text: 'Loading', spinner: 'el-icon-loading', background: 'rgba(0, 0, 0, 0.7)'});
             if(params){
-              alert('submit!');
               api.insertOrder(params).then((response) => {
                 debugger
                 if(response.data){
