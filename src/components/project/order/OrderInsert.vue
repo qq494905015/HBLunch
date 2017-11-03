@@ -68,7 +68,7 @@
     },
     data() {
       return {
-        activeIndex:'order_new',
+        activeIndex:'order_insert',
         orderTableWidth: screen.width /1.3,
         selectStore: '',
         store: [{value: '白云区', label: '白云区'}, {value: '佛山区', label: '佛山区'}, {
