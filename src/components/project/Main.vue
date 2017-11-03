@@ -63,7 +63,7 @@
             type: 'success',
             message: '注销成功，正在跳转登录页面!'
           });
-          THAT.$router.push({ name: '/'})
+          THAT.$router.push({ name: 'Login'})
         }).catch(() => {
 
         });
