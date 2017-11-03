@@ -46,7 +46,7 @@
         </el-form-item>
         <el-form-item label="平台" prop="plation">
           <el-radio-group v-model="ruleForm.plation" >
-            <el-radio :label="plaionObj" v-for="(plaionObj,index) in plationList"></el-radio>
+            <el-radio :label="plaionObj" v-for="(plaionObj,index) in plationList" :key="index"></el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item>
@@ -60,7 +60,6 @@
 <script>
   import api from '../../../api/';
   import main from '../Main.vue';
-  import plationJson from './plation.json';
   export default {
     name: 'order_insert',
     components:{
@@ -79,7 +78,7 @@
           label: '天河贰区'
         }, {value: '天河壹区', label: '天河壹区'}, {value: '越秀区', label: '越秀区'}],
         userInfo:undefined,
-        plationList:plationJson,
+        plationList: [ "1号外卖","百度", "饿了么", "口碑外卖", "美团", "派乐送", "派乐趣","堂食",  "堂点点","外卖超人", "我是外卖" ],
         pickerOptions1: {
           shortcuts: [{
             text: '今天',
