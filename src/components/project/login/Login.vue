@@ -31,6 +31,7 @@
 
 <script>
   import api from '../../../api/';
+  import config from '../../../api/config.js';
   import img1 from '../../../assets/login/img/1.jpg';
   export default {
     name: 'login',

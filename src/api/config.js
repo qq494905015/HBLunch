@@ -2,7 +2,7 @@ import Qs from 'qs'
 //  baseURL 请求后台网关地址  wxUrl 微信url   trackUrl 埋点js地址
 export default{
   url: '/route',
-  baseURL:'http://localhost:8080',
+  baseURL:'http://'+window.location.host,
   appId: '000101',
   method: 'POST',
   /* transformRequest: [function (data) {
