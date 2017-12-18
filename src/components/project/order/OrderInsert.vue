@@ -78,7 +78,8 @@
           label: '天河贰区'
         }, {value: '天河壹区', label: '天河壹区'}, {value: '越秀区', label: '越秀区'}],
         userInfo:undefined,
-        plationList: [ "1号外卖","百度", "饿了么", "口碑外卖", "美团", "派乐送", "派乐趣","堂食",  "堂点点","外卖超人", "我是外卖" ],
+//        plationList: [ "1号外卖","百度", "饿了么", "口碑外卖", "美团", "派乐送", "派乐趣","堂食",  "堂点点","外卖超人", "我是外卖" ],
+        plationList: [ "电话下单","小团餐"],
         pickerOptions1: {
           shortcuts: [{
             text: '今天',
