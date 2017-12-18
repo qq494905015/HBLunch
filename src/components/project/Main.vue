@@ -20,10 +20,11 @@
             <el-menu-item index="order_his">历史订单</el-menu-item>
           </router-link>
           <router-link :to="{path:'Order_new'}">
-            <el-menu-item index="order_new">动态订单</el-menu-item>
+            <el-menu-item index="order_new">实时订单</el-menu-item>
           </router-link>
-          <router-link :to="{path:'Order_insert'}" v-if="userInfo&&userInfo.type == '1'">
-            <el-menu-item index="order_insert">模拟订单(立刻下单)</el-menu-item>
+          <!--<router-link :to="{path:'Order_insert'}" v-if="userInfo&&userInfo.type == '1'">-->
+          <router-link :to="{path:'Order_insert'}" >
+            <el-menu-item index="order_insert">立刻下单</el-menu-item>
           </router-link>
         </el-submenu>
         <div style="float: right;display: inline-block;padding: 19px;color:white;cursor: pointer" v-on:click="loginOut">
