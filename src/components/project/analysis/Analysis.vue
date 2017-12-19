@@ -31,7 +31,7 @@
         <el-card class="box-card" :style="'padding: 18px;display:inline-block;margin-left:20px'">
           <div>
             <span >营业额</span>
-            <span style="float: right;"><h3 >¥{{orderPrice}}</h3></span>
+            <span style="float: right;"><h3 >¥{{orderPrice?orderPrice.toFixed(2):orderPrice}}</h3></span>
           </div>
         </el-card>
         <el-card class="box-card" :style="'padding: 18px;display: inline-block;'">
@@ -43,7 +43,7 @@
         <el-card class="box-card" :style="'padding: 18px;display: inline-block;'">
           <div>
             <span>客单价</span>
-            <span style="float: right"><h3>¥{{orderCustomerPrice}}</h3></span>
+            <span style="float: right"><h3>¥{{orderCustomerPrice?orderCustomerPrice.toFixed(2):orderCustomerPrice}}</h3></span>
           </div>
         </el-card>
       </div>
@@ -195,7 +195,7 @@
                 THAT.orderCustomerPrice += Number(countOrderPriceObj.avgOrderPrice?countOrderPriceObj.avgOrderPrice:0);
                 var chartObj = {
                   "name":countOrderPriceObj.storeName,
-                  "value":countOrderPriceObj.totalOrderPrice
+                  "value":Number(countOrderPriceObj.totalOrderPrice?countOrderPriceObj.totalOrderPrice:0).toFixed(2)
                 }
                 THAT.chart.data.push(chartObj);
               }

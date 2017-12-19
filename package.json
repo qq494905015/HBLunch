@@ -19,7 +19,8 @@
     "jquery": "^3.2.1",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0",
-    "vue-schart": "^0.1.4"
+    "vue-schart": "^0.1.4",
+    "vue-xlsx-table": "^1.2.7"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

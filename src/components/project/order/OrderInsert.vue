@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-header :activeIndex="activeIndex"></app-header>
-    <div :style="'width:'+(orderTableWidth)+'px;'" class="demo-block2">订单模拟</div>
+    <div :style="'width:'+(orderTableWidth)+'px;'" class="demo-block2">订单录入</div>
     <div :style="'width:'+(orderTableWidth)+'px;'" class="demo-block">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="姓名" prop="name" :style="'width:40%;display:inline-block'">
